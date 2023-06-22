@@ -1,9 +1,9 @@
 FROM node:alpine3.18 as build
 WORKDIR /app
-COPY package*.json .
+COPY package*.json ./
 RUN npm i
 RUN npm i react-scripts@3.4.1 -g --silent
-COPY . .
+COPY . ./
 RUN npm run build
 
 FROM nginx:stable-alpine
