@@ -29,7 +29,11 @@ pipeline {
         }
         stage("Build Docker Image"){
             steps{
-                sh "echo Build Docker Image..."
+                sh '''
+                echo Build Docker Image...
+                docker build -t dstoffels/react-docker-jenkins:latest .
+                docker images
+                '''
             }
 
         }
