@@ -7,7 +7,7 @@ pipeline {
         withCredentials([usernamePassword(credentialsId: 'personal-docker-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
             sh 'docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}'
         }   
-            PATH = "${nodejsTool}/bin:${dockerTool}/bin:${env.PATH}"
+        PATH = "${nodejsTool}/bin:${dockerTool}/bin:${env.PATH}"
         
     }
 
@@ -46,6 +46,7 @@ pipeline {
                 echo Push Docker Image to Docker Hub...
                 // docker push dstoffels/react-docker-jenkins:latest
                 '''
+        }
         }
     }
 }
