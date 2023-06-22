@@ -3,9 +3,9 @@ pipeline {
 
     environment{
         def nodejsTool = tool name: 'node-20-tool', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
-        // def dockerTool - tool name: 'docker-latest-tool', type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
-        PATH = "${nodejsTool}/bin:${env.PATH}"
-        // ${dockerTool}/bin:
+        def dockerTool - tool name: 'docker-latest-tool', type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
+        PATH = "${nodejsTool}/bin:${dockerTool}/bin:${env.PATH}"
+        
     }
 
     stages{
