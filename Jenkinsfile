@@ -4,7 +4,10 @@ pipeline {
     environment{
         def nodejsTool = tool name: 'node-20-tool', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
         def dockerTool = tool name: 'docker-latest-tool', type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
-        PATH = "${nodejsTool}/bin:${dockerTool}/bin:${env.PATH}"
+        withCredentials([usernamePassword(credentialsId: 'personal-docker-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+            sh 'docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}'
+        }   
+            PATH = "${nodejsTool}/bin:${dockerTool}/bin:${env.PATH}"
         
     }
 
@@ -41,10 +44,8 @@ pipeline {
             steps{
                 sh '''
                 echo Push Docker Image to Docker Hub...
-                docker login
-                docker push dstoffels/react-docker-jenkins:latest
+                // docker push dstoffels/react-docker-jenkins:latest
                 '''
-            }
         }
     }
 }
