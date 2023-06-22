@@ -1,8 +1,20 @@
 pipeline {
+    agent any
+
+    environment{
+        def nodejsTool = tool name: 'node-20-tool', type: 'NodeJSInstallation'
+        // def dockerTool - tool name: 'docker-latest-tool', type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
+        env.PATH = "${nodejsTool}/bin:${env.PATH}"
+        // ${dockerTool}/bin:
+    }
+
     stages{
         stage("Installing Dependencies"){
             steps{
-                sh "echo Installing Dependencies..."
+                sh '''
+                    echo Installing Dependencies...
+                '''
+                    // npm install    
             }
 
         }
