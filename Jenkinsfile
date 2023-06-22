@@ -41,6 +41,7 @@ pipeline {
             steps{
                 sh '''
                 echo Push Docker Image to Docker Hub...
+                docker login
                 docker push dstoffels/react-docker-jenkins:latest
                 '''
             }
