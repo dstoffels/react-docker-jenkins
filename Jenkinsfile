@@ -39,9 +39,11 @@ pipeline {
         }
         stage("Push Docker Image to Docker Hub"){
             steps{
-                sh "echo Push Docker Image to Docker Hub..."
+                sh '''
+                echo Push Docker Image to Docker Hub...
+                docker push dstoffels/react-docker-jenkins:latest
+                '''
             }
-
         }
     }
 }
