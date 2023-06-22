@@ -20,7 +20,10 @@ pipeline {
         }
         stage("Building Optimized React Production Files"){
             steps{
-                sh "echo Building Optimized React Production Files..."
+                sh '''
+                    echo Building Optimized React Production Files...
+                    npm run-script build
+                    '''
             }
 
         }
