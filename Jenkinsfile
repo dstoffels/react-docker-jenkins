@@ -40,13 +40,12 @@ pipeline {
             steps{
                 script {
                     withCredentials([usernamePassword(credentialsId: 'personal-docker-hub-creds', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                        sh 'docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}'
+                        sh '''
+                        docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
+                        docker push dstoffels/react-docker-jenkins:latest
+                        '''
                     }  
                 }
-                sh '''
-                echo Push Docker Image to Docker Hub...
-                // docker push dstoffels/react-docker-jenkins:latest
-                '''
         }
         }
     }
