@@ -17,6 +17,7 @@ pipeline {
             }
 
         }
+
         stage("Building Optimized React Production Files"){
             steps{
                 sh '''
@@ -26,27 +27,28 @@ pipeline {
             }
 
         }
+
         stage("Build Docker Image"){
             steps{
-                sh '''
+                sh """
                 echo Build Docker Image...
-                docker build -t dstoffels/react-docker-jenkins:latest .
+                docker build -t dstoffels/react-docker-jenkins:$BUILD_NUMBER .
                 docker images
-                '''
+                """
             }
-
         }
+
         stage("Push Docker Image to Docker Hub"){
             steps{
-                script {
-                    withCredentials([usernamePassword(credentialsId: 'personal-docker-hub-creds', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                        sh '''
-                        docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
-                        docker push dstoffels/react-docker-jenkins:latest
-                        '''
-                    }  
+                withCredentials([usernamePassword(credentialsId: 'personal-docker-hub-creds', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                    sh """
+                    docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
+                    docker push dstoffels/react-docker-jenkins:$BUILD_NUMBER
+                    docker tag dstoffels/react-docker-jenkins:$BUILD_NUMBER dstoffels/react-docker-jenkins:latest
+                    docker push dstoffels/react-docker-jenkins:latest
+                    """
                 }
-        }
+            }
         }
     }
 }
