@@ -13,7 +13,7 @@ pipeline {
         stage("Installing Dependencies"){
             steps{
                 sh '''
-                    ls
+                    npm i
                 '''
             }
 
