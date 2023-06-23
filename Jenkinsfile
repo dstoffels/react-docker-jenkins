@@ -13,44 +13,43 @@ pipeline {
         stage("Installing Dependencies"){
             steps{
                 sh '''
-                    echo Installing Dependencies...
-                    npm install    
+                    node --version
                 '''
             }
 
         }
 
-        stage("Building Optimized React Production Files"){
-            steps{
-                sh '''
-                    echo Building Optimized React Production Files...
-                    npm run-script build
-                    '''
-            }
+        // stage("Building Optimized React Production Files"){
+        //     steps{
+        //         sh '''
+        //             echo Building Optimized React Production Files...
+        //             npm run-script build
+        //             '''
+        //     }
 
-        }
+        // }
 
-        stage("Build Docker Image"){
-            steps{
-                sh """
-                echo Build Docker Image...
-                docker build -t dstoffels/react-docker-jenkins:$BUILD_NUMBER .
-                docker images
-                """
-            }
-        }
+        // stage("Build Docker Image"){
+        //     steps{
+        //         sh """
+        //         echo Build Docker Image...
+        //         docker build -t dstoffels/react-docker-jenkins:$BUILD_NUMBER .
+        //         docker images
+        //         """
+        //     }
+        // }
 
-        stage("Push Docker Image to Docker Hub"){
-            steps{
-                withCredentials([usernamePassword(credentialsId: 'personal-docker-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                    sh """
-                    docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
-                    docker push dstoffels/react-docker-jenkins:$BUILD_NUMBER
-                    docker tag dstoffels/react-docker-jenkins:$BUILD_NUMBER dstoffels/react-docker-jenkins:latest
-                    docker push dstoffels/react-docker-jenkins:latest
-                    """
-                }
-            }
-        }
+        // stage("Push Docker Image to Docker Hub"){
+        //     steps{
+        //         withCredentials([usernamePassword(credentialsId: 'personal-docker-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+        //             sh """
+        //             docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
+        //             docker push dstoffels/react-docker-jenkins:$BUILD_NUMBER
+        //             docker tag dstoffels/react-docker-jenkins:$BUILD_NUMBER dstoffels/react-docker-jenkins:latest
+        //             docker push dstoffels/react-docker-jenkins:latest
+        //             """
+        //         }
+        //     }
+        // }
     }
 }
